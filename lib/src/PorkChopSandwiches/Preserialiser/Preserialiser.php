@@ -17,38 +17,69 @@ use \Iterator;
  *
  * Provides a generic recursive pre-serialiser.
  * When it encounters objects that implement the Preserialisable interface, it invokes preserialise() on them to get their serialisable value (ala JsonSerializable::jsonSerialize).
- * Also allows the passing of custom arguments (either at invocation or before), which are then passed on to preSerialise(), allowing the object to customise the value it returns.
+ * Also allows the passing of custom arguments (either at invocation or before), which are then passed on to preserialise(), allowing the object to customise the value it returns.
  *
  * @package PorkChopSandwiches\Preserialiser
  */
 class Preserialiser {
 
+    /* @var array $default_args */
     private $default_args = array();
 
+    /**
+     * @constructor
+     *
+     * @param array [$default_args] The initial value for the additional args that are passed to preserialise().
+     */
     public function __construct (array $default_args = array()) {
         $this -> default_args = $default_args;
     }
 
+    /**
+     * @public clearDefaultArgs() empties the array of default args. Chainable.
+     *
+     * @return Preserialiser
+     */
     public function clearDefaultArgs () {
         $this -> default_args = array();
+        return $this;
     }
 
+    /**
+     * @public setDefaultArgs() sets the default args, removing any existing ones. Chainable.
+     *
+     * @param array $default_args
+     *
+     * @return Preserialiser
+     */
     public function setDefaultArgs (array $default_args) {
         $this -> default_args = $default_args;
         return $this;
     }
 
+    /**
+     * @public addDefaultArgs() adds additional default args, merged with the existing ones. Chainable.
+     *
+     * @param array $more_default_args
+     *
+     * @return Preserialiser
+     */
     public function addDefaultArgs (array $more_default_args) {
         $this -> default_args = array_merge($this -> default_args, $more_default_args);
         return $this;
     }
 
+    /**
+     * @public getDefaultArgs() gets the current default args.
+     *
+     * @return array
+     */
     public function getDefaultArgs () {
         return $this -> default_args;
     }
 
     /**
-     * @private isIterable() returns whether the passed variable can be iterated (i.e. is an array or an Iterator instance)
+     * @private isIterable() returns whether the passed variable can be iterated (i.e. is an array or an Iterator instance).
      *
      * @param mixed $v
      *
