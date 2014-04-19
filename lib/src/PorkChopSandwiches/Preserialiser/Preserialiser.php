@@ -33,8 +33,8 @@ class Preserialiser {
     /**
      * @constructor
      *
-     * @param array     [$default_args] The initial value for the additional args that are passed to preserialise().
-     * @param integer   [$max_depth]    How deep to recurse
+     * @param array     $default_args  The initial value for the additional args that are passed to preserialise().
+     * @param integer   $max_depth     How deep to recurse
      */
     public function __construct (array $default_args = array(), $max_depth = 20) {
         $this -> default_args = $default_args;
@@ -119,10 +119,10 @@ class Preserialiser {
     /**
      * @private serialiseIterable() performs serialisation of an iterable value.
      *
-     * @param array|Iterator  $target       The variable to serialize the contents of. Must be an array, or implement Iterator
-     * @param array           [$args]       Additional parameters to pass to preserialize() to modify the output
-     * @param integer         [$max_depth]  The maximum depth. If the current depth exceeds this, throw an exception.
-     * @param integer         [$depth]      The current depth, used to track recursion.
+     * @param array|Iterator  $target     The variable to serialize the contents of. Must be an array, or implement Iterator
+     * @param array           $args       Additional parameters to pass to preserialize() to modify the output
+     * @param integer         $max_depth  The maximum depth. If the current depth exceeds this, throw an exception.
+     * @param integer         $depth      The current depth, used to track recursion.
      *
      * @throws PreserialiserMaxDepthException
      *
@@ -161,7 +161,7 @@ class Preserialiser {
      * @public preserialise() pre-serialises a value.
      *
      * @param mixed $target  The value to pre-serialise.
-     * @param array [$args]  Optional additional parameters. Merged with (and overrides) any default args.
+     * @param array $args    Optional additional parameters. Merged with (and overrides) any default args.
      *
      * @return mixed
      */

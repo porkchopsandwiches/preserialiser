@@ -24,7 +24,7 @@ interface Preserialisable {
 	/**
 	 * @public preserialise() returns the value that should be serialised for this instance.
      *
-     * @param array [$args] Additional parameters specified by the Preserialiser
+     * @param array $args  Additional parameters specified by the Preserialiser
 	 *
 	 * @return mixed
 	 */
