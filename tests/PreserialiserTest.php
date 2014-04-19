@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the Preserialiser library.
+ *
+ * Copyright (c) Cam Morrow
+ *
+ * Please view the LICENSE file that was distributed with this source code For the full copyright and license information.
+ */
+
 use PorkChopSandwiches\Preserialiser\Preserialiser;
 use PorkChopSandwiches\Preserialiser\Preserialisable;
 

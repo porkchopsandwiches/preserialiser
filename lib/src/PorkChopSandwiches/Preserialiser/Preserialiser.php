@@ -19,6 +19,8 @@ use \Iterator;
  * When it encounters objects that implement the Preserialisable interface, it invokes preserialise() on them to get their serialisable value (ala JsonSerializable::jsonSerialize).
  * Also allows the passing of custom arguments (either at invocation or before), which are then passed on to preserialise(), allowing the object to customise the value it returns.
  *
+ * @author Cam Morrow
+ *
  * @package PorkChopSandwiches\Preserialiser
  */
 class Preserialiser {
