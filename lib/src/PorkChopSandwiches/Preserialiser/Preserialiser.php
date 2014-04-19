@@ -27,14 +27,18 @@ class Preserialiser {
 
     /* @var array $default_args */
     private $default_args = array();
+    /* @var integer $max_depth */
+    private $max_depth = 20;
 
     /**
      * @constructor
      *
-     * @param array [$default_args] The initial value for the additional args that are passed to preserialise().
+     * @param array     [$default_args] The initial value for the additional args that are passed to preserialise().
+     * @param integer   [$max_depth]    How deep to recurse
      */
-    public function __construct (array $default_args = array()) {
+    public function __construct (array $default_args = array(), $max_depth = 20) {
         $this -> default_args = $default_args;
+        $this -> max_depth = $max_depth;
     }
 
     /**
@@ -81,6 +85,27 @@ class Preserialiser {
     }
 
     /**
+     * @public setMaxDepth() sets the maximum recursion depth. Chainable.
+     *
+     * @param integer   $max_depth
+     *
+     * @return Preserialiser
+     */
+    public function setMaxDepth ($max_depth) {
+        $this -> max_depth = (int) abs($max_depth);
+        return $this;
+    }
+
+    /**
+     * @public getMaxDepth() gets the maximum recursion depth.
+     *
+     * @return integer
+     */
+    public function getMaxDepth () {
+        return $this -> max_depth;
+    }
+
+    /**
      * @private isIterable() returns whether the passed variable can be iterated (i.e. is an array or an Iterator instance).
      *
      * @param mixed $v
@@ -94,13 +119,23 @@ class Preserialiser {
     /**
      * @private serialiseIterable() performs serialisation of an iterable value.
      *
-     * @param array|Iterator  $target  The variable to serialize the contents of. Must be an array, or implement Iterator
-     * @param array           [$args]  Additional parameters to pass to preserialize() to modify the output
+     * @param array|Iterator  $target       The variable to serialize the contents of. Must be an array, or implement Iterator
+     * @param array           [$args]       Additional parameters to pass to preserialize() to modify the output
+     * @param integer         [$max_depth]  The maximum depth. If the current depth exceeds this, throw an exception.
+     * @param integer         [$depth]      The current depth, used to track recursion.
+     *
+     * @throws PreserialiserMaxDepthException
      *
      * @return array
      */
-    static private function serialiseIterable ($target, array $args = array()) {
+    static private function serialiseIterable ($target, array $args = array(), $max_depth = 0, $depth = 0) {
         $result = array();
+
+        $depth++;
+
+        if ($depth > $max_depth) {
+            throw new PreserialiserMaxDepthException($max_depth);
+        }
 
         foreach ($target as $key => $value) {
 
@@ -113,7 +148,7 @@ class Preserialiser {
 
             # If the value was Iterable, or was made so by collecting the values above, check its contents too
             if (self::isIterable($value)) {
-                $value = self::serialiseIterable($value, $args);
+                $value = self::serialiseIterable($value, $args, $max_depth, $depth);
             }
 
             $result[$key] = $value;
@@ -136,7 +171,7 @@ class Preserialiser {
         $args = array_merge($this -> default_args, $args);
 
         # Serialise an array containing the target
-        $result = self::serialiseIterable(array($target), $args);
+        $result = self::serialiseIterable(array($target), $args, $this -> max_depth, 0);
         return array_shift($result);
     }
 }
