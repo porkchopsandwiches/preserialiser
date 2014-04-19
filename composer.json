@@ -1,0 +1,20 @@
+{
+    "name": "porkchopsandwiches/preserialiser",
+    "description": "A generic pre-serialiser for converting objects to generic types.",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cam Morrow",
+            "email": "cam.morrow@gmail.com",
+            "homepage": "https://github.com/porkchopsandwiches"
+        }
+    ],
+    "require": {
+    },
+    "require-dev":{
+    },
+    "autoload": {
+        "psr-0": {"PorkChopSandwiches\\Preserialiser": "lib/src"}
+    }
+}
