@@ -3,6 +3,7 @@
     "description": "A generic pre-serialiser for converting objects to generic types.",
     "keywords": [],
     "license": "MIT",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Cam Morrow",
