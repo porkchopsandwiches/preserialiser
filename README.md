@@ -8,12 +8,6 @@ Add repo and require to composer.json:
 
 ```js
 {
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/porkchopsandwiches/preserialiser"
-		}
-	],
 	"require": {
 		"porkchopsandwiches/preserialiser": "dev-master"
 	}
